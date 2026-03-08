@@ -1,7 +1,0 @@
-export { HomeHero } from './HomeHero'
-export { WhyEtihadAmu } from './WhyEtihadAmu'
-export { HomeWhatWeDo } from './HomeWhatWeDo'
-export { OurCustomers } from './OurCustomers'
-export { GlobalNetwork } from './GlobalNetwork'
-export { CtaBanner } from './CtaBanner'
-export { OurExpertise } from './OurExpertise'
