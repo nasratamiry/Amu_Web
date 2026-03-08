@@ -1,24 +1,22 @@
 # Dependencies
 node_modules/
 
-# Build output
+# Build
 dist/
 *.tsbuildinfo
 
-# Local env
+# Env
 .env
 .env.local
 .env.*.local
 
 # Logs
 *.log
-npm-debug.log*
-
-# Editor
-.vscode/*
-!.vscode/extensions.json
-.idea/
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Editor
+.idea/
+.vscode/
