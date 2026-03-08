@@ -25,7 +25,7 @@ export function Contact() {
   }
 
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <motion.div
@@ -150,7 +150,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full py-4 px-6 bg-brand rounded-xl font-semibold text-white hover:bg-brand-dark active:bg-brand-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="w-full py-4 px-6 bg-brand text-white rounded-2xl font-semibold hover:bg-brand-dark active:bg-brand-dark shadow-brand hover:shadow-brand-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
                 {status === 'submitting' ? t.contact.sending : t.contact.send}
               </button>

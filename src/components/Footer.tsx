@@ -25,27 +25,27 @@ export function Footer() {
 
   return (
     <footer className="bg-slate-900 text-slate-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
           <div className="lg:col-span-1">
-            <Link to={path('/')} className="inline-block flex items-center gap-2 text-brand hover:text-brand-dark transition-colors">
-              <img src="/logo.svg" alt="Etihad Amu" className="h-8 w-auto object-contain opacity-90" />
-              <span className="text-xl font-bold text-white">Etihad Amu</span>
+            <Link to={path('/')} className="inline-flex items-center gap-3 text-white hover:opacity-90 transition-opacity">
+              <img src="/logo.svg" alt="Etihad Amu" className="h-10 w-auto object-contain" />
+              <span className="text-xl font-bold">Etihad Amu</span>
             </Link>
-            <p className="mt-4 text-slate-400 text-sm leading-relaxed max-w-xs">
+            <p className="mt-6 text-slate-400 text-sm leading-relaxed max-w-xs">
               {t.footer.tagline}
             </p>
-            <div className="mt-6 flex gap-4">
+            <div className="mt-8 flex gap-5">
               {footerLinks.social.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-brand hover:text-brand-dark transition-colors"
+                  className="text-slate-400 hover:text-brand transition-colors duration-300"
                   aria-label={social.label}
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path d={social.icon} />
                   </svg>
                 </a>
@@ -54,11 +54,11 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">{t.footer.company}</h4>
-            <ul className="mt-4 space-y-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">{t.footer.company}</h4>
+            <ul className="mt-6 space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
-                  <Link to={path(link.path)} className="text-brand hover:text-brand-dark transition-colors text-sm">
+                  <Link to={path(link.path)} className="text-slate-400 hover:text-brand transition-colors duration-300 text-sm">
                     {t.nav[link.labelKey]}
                   </Link>
                 </li>
@@ -67,11 +67,11 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">{t.footer.resources}</h4>
-            <ul className="mt-4 space-y-3">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">{t.footer.resources}</h4>
+            <ul className="mt-6 space-y-4">
               {footerLinks.resources.map((link) => (
                 <li key={link.path}>
-                  <Link to={path(link.path)} className="text-brand hover:text-brand-dark transition-colors text-sm">
+                  <Link to={path(link.path)} className="text-slate-400 hover:text-brand transition-colors duration-300 text-sm">
                     {t.nav[link.labelKey]}
                   </Link>
                 </li>
@@ -80,20 +80,20 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-wider">{t.footer.contact}</h4>
-            <ul className="mt-4 space-y-3 text-slate-400 text-sm">
-              <li><a href="mailto:info@amu.one" className="text-brand hover:text-brand-dark transition-colors">info@amu.one</a></li>
-              <li><a href="tel:+93786174307" className="text-brand hover:text-brand-dark transition-colors">+93 786 174 307</a></li>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider">{t.footer.contact}</h4>
+            <ul className="mt-6 space-y-4 text-slate-400 text-sm">
+              <li><a href="mailto:info@amu.one" className="hover:text-brand transition-colors duration-300">info@amu.one</a></li>
+              <li><a href="tel:+93786174307" className="hover:text-brand transition-colors duration-300">+93 786 174 307</a></li>
               <li>Kabul, Afghanistan</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-16 pt-10 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-6">
           <p className="text-slate-500 text-sm">© {new Date().getFullYear()} Etihad Amu. {t.footer.rights}</p>
-          <div className="flex gap-6 text-sm">
-            <a href="#" className="text-brand hover:text-brand-dark transition-colors">{t.footer.privacy}</a>
-            <a href="#" className="text-brand hover:text-brand-dark transition-colors">{t.footer.terms}</a>
+          <div className="flex gap-8 text-sm">
+            <a href="#" className="text-slate-500 hover:text-brand transition-colors duration-300">{t.footer.privacy}</a>
+            <a href="#" className="text-slate-500 hover:text-brand transition-colors duration-300">{t.footer.terms}</a>
           </div>
         </div>
       </div>

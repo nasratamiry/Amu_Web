@@ -6,7 +6,7 @@ export function CtaBanner() {
   const { t, path } = useI18n()
 
   return (
-    <section className="py-20 lg:py-28 bg-white">
+    <section className="py-24 lg:py-28 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -22,7 +22,7 @@ export function CtaBanner() {
           </p>
           <Link
             to={path('/contact')}
-            className="mt-10 inline-flex items-center gap-2 px-8 py-4 bg-brand rounded-xl font-semibold text-white hover:bg-brand-dark transition-colors"
+            className="mt-10 inline-flex items-center gap-2 px-8 py-4 bg-brand text-white rounded-2xl font-semibold hover:bg-brand-dark shadow-brand hover:shadow-brand-lg transition-all duration-300"
           >
             {t.home.ctaBannerButton}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

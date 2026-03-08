@@ -51,7 +51,7 @@ export function Hero() {
         >
           <Link
             to={path('/contact')}
-            className="group inline-flex items-center gap-2 px-8 py-4 bg-brand rounded-xl font-semibold text-white hover:bg-brand-dark active:bg-brand-dark shadow-lg shadow-brand/25 transition-all duration-300"
+            className="group inline-flex items-center gap-2 px-8 py-4 bg-brand text-white rounded-2xl font-semibold hover:bg-brand-dark active:bg-brand-dark shadow-brand hover:shadow-brand-lg transition-all duration-300"
           >
             {t.hero.cta1}
             <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform rtl:group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@ export function Hero() {
           </Link>
           <Link
             to={path('/projects')}
-            className="inline-flex items-center gap-2 px-8 py-4 border-2 border-brand rounded-xl font-semibold text-brand hover:bg-brand-soft active:bg-brand-soft transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-4 border-2 border-brand text-brand rounded-2xl font-semibold hover:bg-brand-soft active:bg-brand-soft transition-all duration-300"
           >
             {t.hero.cta2}
           </Link>

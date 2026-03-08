@@ -14,7 +14,7 @@ export function Services() {
   }
 
   return (
-    <section className="py-20 lg:py-32 bg-brand-soft">
+    <section className="py-24 lg:py-32 bg-brand-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,24 +35,25 @@ export function Services() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-50px' }}
-          className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className="mt-20 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8"
         >
           {services.map((service, i) => {
             const content = getServiceContent(service.id)
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-brand transition-all duration-300"
+                whileHover={{ y: -4 }}
+                className="group p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-brand/30 transition-all duration-300"
               >
-                <div className="w-14 h-14 rounded-xl bg-brand-soft flex items-center justify-center text-brand group-hover:text-brand-dark group-hover:scale-110 transition-all">
+                <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand group-hover:text-brand-dark transition-colors duration-300 [&_svg]:w-10 [&_svg]:h-10">
                   <ServiceIcon name={service.icon} />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-slate-900">{content.title}</h3>
-                <p className="mt-2 text-slate-600 text-sm leading-relaxed">{content.desc}</p>
+                <h3 className="mt-6 text-lg font-bold text-slate-900">{content.title}</h3>
+                <p className="mt-3 text-slate-600 text-sm leading-relaxed">{content.desc}</p>
               </motion.div>
             )
           })}

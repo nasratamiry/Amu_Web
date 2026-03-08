@@ -9,12 +9,16 @@
 
   html[dir='rtl'] {
     text-align: right;
-    font-family: 'Vazirmatn', Inter, system-ui, sans-serif;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
   }
 
   html[dir='rtl'] body {
     text-align: right;
-    font-family: 'Vazirmatn', Inter, system-ui, sans-serif;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+  }
+
+  html[dir='ltr'] body {
+    font-family: 'Inter', system-ui, sans-serif;
   }
   
   body {
@@ -32,9 +36,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full;
+  background: rgba(0, 140, 255, 0.5);
+  @apply rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400;
+  background: rgb(0, 140, 255);
 }

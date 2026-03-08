@@ -28,7 +28,7 @@ export function WhyEtihadAmu() {
   ]
 
   return (
-    <section className="py-20 lg:py-28 bg-white">
+    <section className="py-24 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -48,9 +48,9 @@ export function WhyEtihadAmu() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="p-8 rounded-2xl bg-brand-soft/50 border border-brand/10 hover:border-brand/30 hover:shadow-lg transition-all duration-300"
+              className="p-8 rounded-2xl bg-brand-soft/50 border border-brand/10 hover:border-brand/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-16 h-16 rounded-xl bg-brand-soft flex items-center justify-center text-brand">
+              <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand [&_svg]:w-10 [&_svg]:h-10">
                 {icons[item.key]}
               </div>
               <h3 className="mt-6 text-xl font-bold text-slate-900">{item.title}</h3>

@@ -6,7 +6,10 @@ export function AboutPage() {
     <>
       <Helmet>
         <title>About Us | Etihad Amu</title>
-        <meta name="description" content="Our story and mission. Building the future, one line of code at a time." />
+        <meta name="description" content="Our story and mission. Strategic software engineering partner for scalable business systems." />
+        <meta property="og:title" content="About Us | Etihad Amu" />
+        <meta property="og:description" content="Our story and mission. Strategic software engineering partner for scalable business systems." />
+        <meta property="og:type" content="website" />
       </Helmet>
       <div className="pt-24 lg:pt-32">
         <About />

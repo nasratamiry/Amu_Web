@@ -6,7 +6,10 @@ export function ServicesPage() {
     <>
       <Helmet>
         <title>Services | Etihad Amu</title>
-        <meta name="description" content="Our services: Web Development, Mobile Apps, UI/UX Design, Cloud Solutions, Tech Consulting." />
+        <meta name="description" content="Enterprise-grade software engineering services: Custom Development, Enterprise Apps, SaaS Platforms, Architecture, Modernization." />
+        <meta property="og:title" content="Services | Etihad Amu" />
+        <meta property="og:description" content="Enterprise-grade software engineering services for mission-critical business systems." />
+        <meta property="og:type" content="website" />
       </Helmet>
       <div className="pt-24 lg:pt-32">
         <Services />

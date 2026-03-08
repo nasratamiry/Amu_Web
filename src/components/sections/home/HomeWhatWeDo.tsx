@@ -24,7 +24,7 @@ export function HomeWhatWeDo() {
   ]
 
   return (
-    <section className="py-20 lg:py-28 bg-brand-soft">
+    <section className="py-24 lg:py-28 bg-brand-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,13 +52,13 @@ export function HomeWhatWeDo() {
               >
                 <Link
                   to={path('/services')}
-                  className="block p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-brand transition-all duration-300 h-full"
+                  className="block p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-brand/30 hover:-translate-y-1 transition-all duration-300 h-full"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-brand-soft flex items-center justify-center text-brand">
+                  <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand [&_svg]:w-10 [&_svg]:h-10">
                     <ServiceIcon name={s.icon} />
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-slate-900">{content.title}</h3>
-                  <p className="mt-2 text-slate-600 text-sm leading-relaxed line-clamp-3">{content.desc}</p>
+                  <h3 className="mt-6 text-lg font-bold text-slate-900">{content.title}</h3>
+                  <p className="mt-3 text-slate-600 text-sm leading-relaxed line-clamp-3">{content.desc}</p>
                 </Link>
               </motion.div>
             )

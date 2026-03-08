@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         brand: 'rgb(0, 140, 255)',
-        'brand-dark': 'rgb(0, 100, 200)',
+        'brand-dark': 'rgb(0, 110, 220)',
         'brand-light': 'rgb(79, 179, 255)',
         'brand-soft': 'rgb(230, 244, 255)',
         primary: {
@@ -31,7 +31,12 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Inter', 'system-ui', 'sans-serif'],
-        fa: ['Vazirmatn', 'Inter', 'sans-serif'],
+        fa: ['Vazirmatn', 'Tahoma', 'sans-serif'],
+      },
+      boxShadow: {
+        'soft': '0 4px 6px -1px rgba(0, 140, 255, 0.08), 0 2px 4px -2px rgba(0, 140, 255, 0.06)',
+        'brand': '0 10px 40px -10px rgba(0, 140, 255, 0.25)',
+        'brand-lg': '0 25px 50px -12px rgba(0, 140, 255, 0.2)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
@@ -54,8 +59,8 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-pattern': 'linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%)',
-        'hero-brand': 'linear-gradient(to bottom, #ffffff 0%, rgb(230, 244, 255) 100%)',
+        'hero-pattern': 'linear-gradient(135deg, rgba(0, 140, 255, 0.05) 0%, rgba(79, 179, 255, 0.08) 100%)',
+        'hero-brand': 'linear-gradient(to bottom, #ffffff 0%, rgba(230, 244, 255, 0.5) 50%, rgb(230, 244, 255) 100%)',
       },
     },
   },

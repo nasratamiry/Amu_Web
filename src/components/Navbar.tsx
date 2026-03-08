@@ -69,7 +69,7 @@ export function Navbar() {
                 end={link.path === '/'}
                 className={({ isActive }) =>
                   `relative group whitespace-nowrap text-[13px] font-medium transition-colors ${
-                    isActive ? 'text-brand' : 'text-slate-900 hover:text-slate-700'
+                    isActive ? 'text-brand active' : 'text-slate-900 hover:text-brand'
                   }`
                 }
               >

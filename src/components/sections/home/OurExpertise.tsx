@@ -19,7 +19,7 @@ export function OurExpertise() {
   ]
 
   return (
-    <section className="py-20 lg:py-28 bg-brand-soft">
+    <section className="py-24 lg:py-28 bg-brand-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,9 +42,9 @@ export function OurExpertise() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-brand transition-all duration-300"
+              className="p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-brand/30 hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-16 h-16 rounded-xl bg-brand-soft flex items-center justify-center text-brand">
+              <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand [&_svg]:w-10 [&_svg]:h-10">
                 {icons[i]}
               </div>
               <h3 className="mt-6 text-xl font-bold text-slate-900">{item.title}</h3>
