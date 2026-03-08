@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { submitContactMessage } from '@/api'
 import { useI18n } from '@/i18n/I18nContext'
 
 export function Contact() {
@@ -11,13 +12,27 @@ export function Contact() {
     message: '',
   })
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('submitting')
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setStatus('success')
-    setFormState({ name: '', email: '', subject: '', message: '' })
+    setErrorMessage('')
+
+    const result = await submitContactMessage({
+      name: formState.name,
+      email: formState.email,
+      message: formState.message,
+      subject: formState.subject || undefined,
+    })
+
+    if (result.success) {
+      setStatus('success')
+      setFormState({ name: '', email: '', subject: '', message: '' })
+    } else {
+      setStatus('error')
+      setErrorMessage(result.message || t.contact.error)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,7 +48,9 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-brand font-semibold text-sm uppercase tracking-wider">{t.contact.label}</span>
+            <span className="text-brand font-semibold text-sm uppercase tracking-wider">
+              {t.contact.label}
+            </span>
             <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">
               {t.contact.title}
             </h2>
@@ -63,7 +80,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-900">{t.contact.phone}</h3>
-                  <a href="tel:+15551234567" className="text-brand hover:text-brand-dark transition-colors">
+                  <a href="tel:+93786174307" className="text-brand hover:text-brand-dark transition-colors">
                     +93 786 174 307
                   </a>
                 </div>
@@ -90,7 +107,9 @@ export function Contact() {
           >
             <form onSubmit={handleSubmit} className="space-y-6 p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">{t.contact.name}</label>
+                <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
+                  {t.contact.name}
+                </label>
                 <input
                   type="text"
                   id="name"
@@ -103,7 +122,9 @@ export function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">{t.contact.email}</label>
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+                  {t.contact.email}
+                </label>
                 <input
                   type="email"
                   id="email"
@@ -116,12 +137,13 @@ export function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-2">{t.contact.subject}</label>
+                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 mb-2">
+                  {t.contact.subject}
+                </label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
-                  required
                   value={formState.subject}
                   onChange={handleChange}
                   className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
@@ -129,7 +151,9 @@ export function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">{t.contact.message}</label>
+                <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">
+                  {t.contact.message}
+                </label>
                 <textarea
                   id="message"
                   name="message"
@@ -145,7 +169,7 @@ export function Contact() {
                 <p className="text-green-600 text-sm">{t.contact.success}</p>
               )}
               {status === 'error' && (
-                <p className="text-red-600 text-sm">{t.contact.error}</p>
+                <p className="text-red-600 text-sm">{errorMessage}</p>
               )}
               <button
                 type="submit"

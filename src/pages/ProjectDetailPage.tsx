@@ -1,16 +1,64 @@
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { projects } from '@/data/projects'
+import { fetchProjectById } from '@/api'
+import { projects as fallbackProjects } from '@/data/projects'
 import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
+import type { Project } from '@/api/types'
 
 export function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { t, path } = useI18n()
-  const project = projects.find((p) => p.id === id)
+  const [project, setProject] = useState<Project | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
 
-  if (!project) {
+  useEffect(() => {
+    if (!id) {
+      setNotFound(true)
+      setLoading(false)
+      return
+    }
+    fetchProjectById(id)
+      .then(({ project: data, error }) => {
+        if (error || !data) {
+          const fallback = fallbackProjects.find((p) => p.id === id)
+          if (fallback) {
+            setProject({
+              id: fallback.id,
+              title: fallback.title,
+              description: fallback.description,
+              category: fallback.category,
+              image: fallback.image,
+              technologies: fallback.technologies,
+              year: fallback.year,
+            })
+          } else {
+            setNotFound(true)
+          }
+        } else {
+          setProject(data)
+        }
+      })
+      .finally(() => setLoading(false))
+  }, [id])
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center pt-24">
+        <div className="animate-pulse w-full max-w-4xl mx-auto px-4">
+          <div className="h-12 w-48 bg-slate-200 rounded mb-8" />
+          <div className="aspect-video bg-slate-200 rounded-2xl mb-8" />
+          <div className="h-8 w-3/4 bg-slate-200 rounded mb-4" />
+          <div className="h-4 w-full bg-slate-200 rounded" />
+        </div>
+      </div>
+    )
+  }
+
+  if (notFound || !project) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center pt-24">
         <div className="text-center">
@@ -56,12 +104,16 @@ export function ProjectDetailPage() {
             </div>
 
             <div className="flex flex-wrap gap-3 mb-6">
-              <span className="px-3 py-1 rounded-full bg-brand-soft text-brand text-sm font-medium">
-                {project.category}
-              </span>
-              <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-sm">
-                {project.year}
-              </span>
+              {project.category && (
+                <span className="px-3 py-1 rounded-full bg-brand-soft text-brand text-sm font-medium">
+                  {project.category}
+                </span>
+              )}
+              {project.year && (
+                <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-sm">
+                  {project.year}
+                </span>
+              )}
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
@@ -72,25 +124,27 @@ export function ProjectDetailPage() {
               {project.description}
             </p>
 
-            <div>
-              <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">{t.projects.techUsed}</h3>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 text-sm"
-                  >
-                    {tech}
-                  </span>
-                ))}
+            {(project.technologies?.length ?? 0) > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">
+                  {t.projects.techUsed}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {project.technologies!.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200 text-slate-700 text-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="mt-12 p-6 rounded-2xl bg-brand-soft border border-brand/20">
               <h3 className="text-lg font-semibold text-slate-900 mb-4">{t.projects.aboutProject}</h3>
-              <p className="text-slate-600 leading-relaxed">
-                {t.projects.aboutText}
-              </p>
+              <p className="text-slate-600 leading-relaxed">{t.projects.aboutText}</p>
             </div>
 
             <div className="mt-12">

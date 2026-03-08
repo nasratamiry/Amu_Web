@@ -1,16 +1,67 @@
+import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion } from 'framer-motion'
-import { blogPosts } from '@/data/blog'
+import { fetchBlogPostBySlug } from '@/api'
+import { blogPosts as fallbackPosts } from '@/data/blog'
 import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
+import type { BlogPost } from '@/api/types'
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
   const { t, path } = useI18n()
-  const post = blogPosts.find((p) => p.slug === slug)
+  const [post, setPost] = useState<BlogPost | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
 
-  if (!post) {
+  useEffect(() => {
+    if (!slug) {
+      setNotFound(true)
+      setLoading(false)
+      return
+    }
+    fetchBlogPostBySlug(slug)
+      .then(({ post: data, error }) => {
+        if (error || !data) {
+          const fallback = fallbackPosts.find((p) => p.slug === slug)
+          if (fallback) {
+            setPost({
+              id: fallback.id,
+              slug: fallback.slug,
+              title: fallback.title,
+              excerpt: fallback.excerpt,
+              content: fallback.content,
+              image: fallback.image,
+              author: fallback.author,
+              date: fallback.date,
+              readTime: fallback.readTime,
+              category: fallback.category,
+            })
+          } else {
+            setNotFound(true)
+          }
+        } else {
+          setPost(data)
+        }
+      })
+      .finally(() => setLoading(false))
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center pt-24">
+        <div className="animate-pulse w-full max-w-3xl mx-auto px-4">
+          <div className="h-12 w-48 bg-slate-200 rounded mb-8" />
+          <div className="aspect-video bg-slate-200 rounded-2xl mb-8" />
+          <div className="h-8 w-3/4 bg-slate-200 rounded mb-4" />
+          <div className="h-4 w-full bg-slate-200 rounded" />
+        </div>
+      </div>
+    )
+  }
+
+  if (notFound || !post) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center pt-24">
         <div className="text-center">
@@ -27,7 +78,7 @@ export function BlogPostPage() {
     <>
       <Helmet>
         <title>{post.title} | Etihad Amu Blog</title>
-        <meta name="description" content={post.excerpt} />
+        <meta name="description" content={post.excerpt || post.title} />
       </Helmet>
 
       <article className="pt-24 lg:pt-32 pb-20 bg-white min-h-screen">
@@ -57,12 +108,26 @@ export function BlogPostPage() {
 
             <div className="flex flex-wrap gap-4 text-sm text-slate-500 mb-6">
               <span>{post.date}</span>
-              <span>•</span>
-              <span>{post.readTime}</span>
-              <span>•</span>
-              <span className="text-brand">{post.category}</span>
-              <span>•</span>
-              <span>{t.blog.by} {post.author}</span>
+              {post.readTime && (
+                <>
+                  <span>•</span>
+                  <span>{post.readTime}</span>
+                </>
+              )}
+              {post.category && (
+                <>
+                  <span>•</span>
+                  <span className="text-brand">{post.category}</span>
+                </>
+              )}
+              {post.author && (
+                <>
+                  <span>•</span>
+                  <span>
+                    {t.blog.by} {post.author}
+                  </span>
+                </>
+              )}
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6 leading-tight">
