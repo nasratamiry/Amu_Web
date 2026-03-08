@@ -1,6 +1,14 @@
-# AMU - Startup Website
+# AMU - Etihad Amu Web
 
-A modern, fully responsive startup website built with React, TypeScript, and TailwindCSS. Features smooth animations with Framer Motion, optimized images with lazy loading, and SEO best practices.
+A modern, fully responsive startup website built with React, TypeScript, and TailwindCSS. Features smooth animations with Framer Motion, admin panel, and full backend API.
+
+## Project Structure
+
+```
+Amu_Web/
+├── Frontend/     # React + Vite + TypeScript
+└── backend/      # Node.js + Express API
+```
 
 ## Features
 
@@ -12,81 +20,45 @@ A modern, fully responsive startup website built with React, TypeScript, and Tai
 - **Team Section** - Team members with photos and social links
 - **Blog/News Section** - Blog posts with detail pages
 - **Contact Section** - Contact form and company info
-- **Navbar & Footer** - Consistent across all pages
+- **Admin Panel** - Dashboard, Blog, Projects, Team, Messages management
 - **Framer Motion** - Smooth animations and transitions
-- **Lazy Loading** - Optimized image loading
-- **SEO Optimized** - Meta tags, Open Graph, structured content
+- **i18n** - Multi-language support (English, Dari)
+- **SEO Optimized** - Meta tags, Open Graph
 
 ## Tech Stack
 
-- React 18
-- TypeScript
-- Vite
-- TailwindCSS
-- React Router
-- Framer Motion
-- React Helmet Async (SEO)
+**Frontend:** React 18, TypeScript, Vite, TailwindCSS, React Router, Framer Motion
+
+**Backend:** Node.js, Express, MongoDB (Mongoose)
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
+### Frontend
 
 ```bash
-# Install dependencies
+cd Frontend
 npm install
-
-# Start development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm preview
 ```
 
-### Project Structure
+### Backend
 
-```
-src/
-├── components/
-│   ├── Navbar.tsx
-│   ├── Footer.tsx
-│   ├── LazyImage.tsx      # Lazy-loaded image component
-│   └── sections/
-│       ├── Hero.tsx
-│       ├── About.tsx
-│       ├── Services.tsx
-│       ├── Technologies.tsx
-│       ├── Projects.tsx
-│       ├── Team.tsx
-│       ├── Blog.tsx
-│       └── Contact.tsx
-├── data/
-│   ├── services.ts
-│   ├── technologies.ts
-│   ├── projects.ts
-│   ├── team.ts
-│   └── blog.ts
-├── pages/
-│   ├── HomePage.tsx
-│   ├── ProjectDetailPage.tsx
-│   └── BlogPostPage.tsx
-├── App.tsx
-├── main.tsx
-└── index.css
+```bash
+cd backend
+npm install
+# Set up .env (copy from .env.example)
+npm run dev
 ```
 
-## Customization
+### Build
 
-- **Content**: Edit files in `src/data/` to update services, projects, team, and blog content
-- **Styling**: Modify `tailwind.config.js` for theme colors and `src/index.css` for global styles
-- **SEO**: Update meta tags in each page's Helmet component and `index.html`
+```bash
+# Frontend
+cd Frontend && npm run build
+
+# Backend
+cd backend && npm run build
+```
 
 ## License
 
