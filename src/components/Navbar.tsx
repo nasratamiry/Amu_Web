@@ -62,12 +62,6 @@ export function Navbar() {
           </Link>
 
           <div className="hidden lg:flex items-center flex-1 justify-end gap-x-6 pr-4">
-            <Link
-              to={path('/contact')}
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-brand text-white rounded-xl text-sm font-semibold hover:bg-brand-dark shadow-soft hover:shadow-brand transition-all duration-300"
-            >
-              {t.nav.getStarted}
-            </Link>
             {navLinks.map((link) => (
               <NavLink
                 key={link.path}
@@ -169,13 +163,6 @@ export function Navbar() {
                     {t.nav[link.labelKey]}
                   </NavLink>
                 ))}
-                <Link
-                  to={path('/contact')}
-                  onClick={() => setIsOpen(false)}
-                  className="mx-4 mb-2 py-3 bg-brand text-white rounded-xl text-center font-semibold hover:bg-brand-dark transition-colors"
-                >
-                  {t.nav.getStarted}
-                </Link>
                 <div className="px-4 py-3 flex items-center gap-2 border-t border-slate-100">
                   <span className="text-slate-500 text-sm">زبان / Language:</span>
                   <div className="flex gap-2">

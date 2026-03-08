@@ -18,7 +18,7 @@ export function HomeHero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="order-2 lg:order-1"
+            className="order-1 lg:order-1"
           >
             <motion.span
               initial={{ opacity: 0, y: 10 }}
@@ -75,7 +75,7 @@ export function HomeHero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative order-1 lg:order-2"
+            className="relative order-2 lg:order-2"
           >
             <div className="aspect-[4/3] lg:aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shadow-xl shadow-slate-200/50">
               <LazyImage
@@ -84,7 +84,7 @@ export function HomeHero() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 rtl:right-auto rtl:left-6 max-w-xs p-6 rounded-2xl bg-white/95 backdrop-blur-sm border border-slate-200 shadow-xl">
+            <div className="relative mt-4 lg:absolute lg:mt-0 lg:-bottom-6 lg:-right-6 rtl:right-auto rtl:left-6 max-w-full sm:max-w-xs p-6 rounded-2xl bg-white/95 backdrop-blur-sm border border-slate-200 shadow-xl">
               <h3 className="text-lg font-bold text-slate-900">{t.about.mission}</h3>
               <p className="mt-2 text-slate-600 text-sm leading-relaxed">
                 {t.about.missionText}
