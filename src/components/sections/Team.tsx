@@ -6,6 +6,16 @@ import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
 import type { TeamMember } from '@/api/types'
 
+const ROLE_ORDER = ['CEO', 'CTO', 'CFO', 'CMO', 'CPO'] as const
+
+function sortByRole(members: TeamMember[]): TeamMember[] {
+  return [...members].sort((a, b) => {
+    const i = ROLE_ORDER.indexOf(a.role as (typeof ROLE_ORDER)[number])
+    const j = ROLE_ORDER.indexOf(b.role as (typeof ROLE_ORDER)[number])
+    return (i === -1 ? 999 : i) - (j === -1 ? 999 : j)
+  })
+}
+
 export function Team() {
   const { t } = useI18n()
   const [members, setMembers] = useState<TeamMember[]>([])
@@ -18,17 +28,19 @@ export function Team() {
         if (err) {
           setError(err)
           setMembers(
-            fallbackMembers.map((m) => ({
-              id: m.id,
-              name: m.name,
-              role: m.role,
-              image: m.image,
-              bio: m.bio,
-              social: m.social,
-            }))
+            sortByRole(
+              fallbackMembers.map((m) => ({
+                id: m.id,
+                name: m.name,
+                role: m.role,
+                image: m.image,
+                bio: m.bio,
+                social: m.social,
+              }))
+            )
           )
         } else {
-          setMembers(data)
+          setMembers(sortByRole(data))
         }
       })
       .finally(() => setLoading(false))
@@ -73,7 +85,7 @@ export function Team() {
                 {t.contact.error} ({error})
               </p>
             )}
-            <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-8" dir="ltr">
               {members.map((member, index) => (
                 <motion.div
                   key={member.id}
