@@ -7,7 +7,7 @@ export function Team() {
   const { t } = useI18n()
 
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -32,10 +32,11 @@ export function Team() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -4 }}
               className="group text-center"
             >
               <div className="relative inline-block">
-                <div className="aspect-square w-48 mx-auto rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shadow-sm group-hover:shadow-lg group-hover:border-brand transition-all duration-300">
+                <div className="aspect-square w-48 mx-auto rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shadow-soft group-hover:shadow-xl group-hover:border-brand/30 transition-all duration-300">
                   <LazyImage
                     src={member.image}
                     alt={member.name}

@@ -8,7 +8,7 @@ export function Blog() {
   const { t, path } = useI18n()
 
   return (
-    <section className="py-20 lg:py-32 bg-brand-soft">
+    <section className="py-24 lg:py-32 bg-brand-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -33,9 +33,10 @@ export function Blog() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -4 }}
             >
               <Link to={path(`/blog/${post.slug}`)} className="group block">
-                <div className="aspect-video rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm group-hover:shadow-lg group-hover:border-brand transition-all duration-300">
+                <div className="aspect-video rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft group-hover:shadow-xl group-hover:border-brand/30 transition-all duration-300">
                   <LazyImage
                     src={post.image}
                     alt={post.title}
