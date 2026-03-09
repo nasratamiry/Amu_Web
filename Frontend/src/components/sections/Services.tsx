@@ -46,14 +46,14 @@ export function Services() {
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.15 }}
+                  transition={{ delay: i * 0.1, duration: 0.2 }}
                   whileHover={{ y: -4 }}
-                  className="group p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:bg-brand hover:shadow-xl hover:border-brand transition-all duration-150 h-full flex flex-col items-center text-center cursor-pointer"
+                  className="group p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:bg-[rgb(0,140,255)] hover:shadow-xl hover:border-[rgb(0,140,255)] transition-all duration-300 h-full flex flex-col items-center text-center cursor-pointer"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand group-hover:bg-white/30 group-hover:text-white transition-all duration-150 [&_svg]:w-10 [&_svg]:h-10 [&_svg]:transition-colors [&_svg]:duration-150">
-                    <ServiceIcon name={service.icon} className="group-hover:text-white transition-colors duration-150" />
+                  <div className="w-16 h-16 rounded-2xl bg-[rgb(230,244,255)] flex items-center justify-center text-[rgb(0,140,255)] group-hover:bg-white/20 group-hover:text-white transition-all duration-300 [&_svg]:w-10 [&_svg]:h-10 [&_svg]:shrink-0">
+                    <ServiceIcon name={service.icon} className="text-inherit" />
                   </div>
-                  <h3 className="mt-6 text-lg font-bold text-slate-900 group-hover:text-white transition-colors duration-150">{content.title}</h3>
+                  <h3 className="mt-6 text-lg font-bold text-slate-900 group-hover:text-white transition-colors duration-300">{content.title}</h3>
                 </motion.div>
               </Link>
             )

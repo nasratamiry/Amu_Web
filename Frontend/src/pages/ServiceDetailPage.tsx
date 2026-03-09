@@ -61,6 +61,26 @@ export function ServiceDetailPage() {
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6">{content.title}</h1>
             <p className="text-slate-600 text-lg leading-relaxed">{content.desc}</p>
 
+            {content.fullDesc && (
+              <p className="mt-6 text-slate-600 text-base leading-relaxed">{content.fullDesc}</p>
+            )}
+
+            {content.highlights && content.highlights.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-lg font-semibold text-slate-800 mb-4">
+                  {t.services.highlightsTitle}
+                </h3>
+                <ul className="space-y-2 text-slate-600">
+                  {content.highlights.map((item: string, idx: number) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <span className="text-brand mt-1 shrink-0">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <Link
               to={path('/contact')}
               className="mt-10 inline-flex items-center gap-2 px-8 py-4 bg-brand text-white rounded-xl font-semibold hover:bg-brand-dark transition-colors"

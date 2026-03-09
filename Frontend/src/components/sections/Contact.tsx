@@ -80,7 +80,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-900">{t.contact.phone}</h3>
-                  <a href="tel:+93786174307" className="text-brand hover:text-brand-dark transition-colors">
+                  <a href="tel:+93786174307" className="text-brand hover:text-brand-dark transition-colors" dir="ltr" style={{ unicodeBidi: 'isolate' }}>
                     +93 786 174 307
                   </a>
                 </div>

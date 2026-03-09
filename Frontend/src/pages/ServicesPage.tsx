@@ -11,7 +11,7 @@ export function ServicesPage() {
         <meta property="og:description" content="Enterprise-grade software engineering services for mission-critical business systems." />
         <meta property="og:type" content="website" />
       </Helmet>
-      <div className="pt-24 lg:pt-32">
+      <div className="pt-24 lg:pt-32 bg-brand-soft">
         <Services />
       </div>
     </>

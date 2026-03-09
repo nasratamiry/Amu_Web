@@ -32,9 +32,9 @@ export function Technologies() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="mt-16 p-8 lg:p-12 rounded-3xl bg-slate-50/80 border border-slate-200"
+          className="mt-16 p-4 sm:p-6 lg:p-12 rounded-3xl bg-slate-50/80 border border-slate-200"
         >
-          <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-4 sm:gap-6">
             {technologies.map((tech, index) => (
               <motion.div
                 key={tech.name}
@@ -43,17 +43,17 @@ export function Technologies() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.02 }}
                 whileHover={{ y: -4 }}
-                className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand/30 hover:shadow-lg transition-all duration-300"
+                className="group flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-brand/30 hover:shadow-lg transition-all duration-300 min-w-0"
               >
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center overflow-hidden p-2 group-hover:scale-105 transition-transform">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center overflow-hidden p-1.5 sm:p-2 group-hover:scale-105 transition-transform flex-shrink-0">
                   <img
-                      src={`${ICON_BASE}/${tech.icon}`}
-                      alt={tech.name}
-                      className="w-full h-full object-contain"
-                      loading="lazy"
-                    />
+                    src={`${ICON_BASE}/${tech.icon}`}
+                    alt={tech.name}
+                    className="w-full h-full object-contain"
+                    loading="lazy"
+                  />
                 </div>
-                <span className="text-slate-900 font-semibold text-sm text-center group-hover:text-brand transition-colors">
+                <span className="text-slate-900 font-semibold text-xs sm:text-sm text-center group-hover:text-brand transition-colors break-words leading-tight w-full">
                   {tech.name}
                 </span>
               </motion.div>

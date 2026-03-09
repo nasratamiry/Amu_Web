@@ -8,7 +8,7 @@ export function BlogPage() {
         <title>Blog | Etihad Amu</title>
         <meta name="description" content="Latest insights and updates on technology, design, and industry trends." />
       </Helmet>
-      <div className="pt-24 lg:pt-32">
+      <div className="pt-24 lg:pt-32 bg-brand-soft">
         <Blog />
       </div>
     </>

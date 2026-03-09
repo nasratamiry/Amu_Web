@@ -83,7 +83,7 @@ export function Footer() {
             <h4 className="text-sm font-bold text-white uppercase tracking-wider">{t.footer.contact}</h4>
             <ul className="mt-6 space-y-4 text-slate-400 text-sm">
               <li><a href="mailto:info@amu.one" className="hover:text-brand transition-colors duration-300">info@amu.one</a></li>
-              <li><a href="tel:+93786174307" className="hover:text-brand transition-colors duration-300">+93 786 174 307</a></li>
+              <li><a href="tel:+93786174307" className="hover:text-brand transition-colors duration-300" dir="ltr" style={{ unicodeBidi: 'isolate' }}>+93 786 174 307</a></li>
               <li>Kabul, Afghanistan</li>
             </ul>
           </div>

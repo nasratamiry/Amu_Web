@@ -8,7 +8,7 @@ export function ProjectsPage() {
         <title>Projects | Etihad Amu</title>
         <meta name="description" content="Our portfolio of successful projects across various industries." />
       </Helmet>
-      <div className="pt-24 lg:pt-32">
+      <div className="pt-24 lg:pt-32 bg-brand-soft">
         <Projects />
       </div>
     </>
