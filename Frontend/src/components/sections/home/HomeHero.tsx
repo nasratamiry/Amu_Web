@@ -24,9 +24,9 @@ export function HomeHero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block mb-8 px-5 py-2.5 rounded-full bg-brand-soft border border-brand/20 text-brand text-sm font-semibold uppercase tracking-wider"
+              className="inline-block mb-8 px-5 py-2.5 rounded-full bg-brand-soft border border-brand/20 text-brand text-sm font-semibold tracking-wider"
             >
-              {t.hero.badge}
+              {t.home.heroSlogan}
             </motion.span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 font-display">
               {t.home.heroTitle}

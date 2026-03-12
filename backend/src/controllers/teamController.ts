@@ -3,6 +3,22 @@ import { TeamMember } from '../models/Team'
 import { ApiError } from '../middleware/errorHandler'
 import mongoose from 'mongoose'
 
+// Fix localhost/relative photo URLs to use production API URL
+const fixPhotoUrl = (photo: string): string => {
+  if (!photo) return photo
+  const apiBase = process.env.API_BASE_URL
+  if (!apiBase) return photo
+  // Replace localhost or relative uploads URLs with production API URL
+  if (photo.startsWith('http://localhost:') || photo.startsWith('https://localhost:')) {
+    const match = photo.match(/\/uploads\/.+$/)
+    return match ? `${apiBase}${match[0]}` : photo
+  }
+  if (photo.startsWith('/uploads/')) {
+    return `${apiBase}${photo}`
+  }
+  return photo
+}
+
 export const getAllTeamMembers = async (
   _req: Request,
   res: Response,
@@ -10,7 +26,11 @@ export const getAllTeamMembers = async (
 ) => {
   try {
     const members = await TeamMember.find().sort({ createdAt: -1 }).lean()
-    res.status(200).json({ success: true, data: members })
+    const fixed = members.map((m: { photo?: string }) => ({
+      ...m,
+      photo: fixPhotoUrl(m.photo || ''),
+    }))
+    res.status(200).json({ success: true, data: fixed })
   } catch (error) {
     next(error)
   }
@@ -32,7 +52,9 @@ export const getTeamMemberById = async (
       throw new ApiError('Team member not found', 404)
     }
 
-    res.status(200).json({ success: true, data: member })
+    const data = member.toObject ? member.toObject() : member
+    if (data.photo) data.photo = fixPhotoUrl(data.photo)
+    res.status(200).json({ success: true, data })
   } catch (error) {
     next(error)
   }
@@ -49,7 +71,9 @@ export const createTeamMember = async (
       ...rest,
       socialLinks: socialLinks || {},
     })
-    res.status(201).json({ success: true, data: member })
+    const data = member.toObject ? member.toObject() : member
+    if (data.photo) data.photo = fixPhotoUrl(data.photo)
+    res.status(201).json({ success: true, data })
   } catch (error) {
     next(error)
   }
@@ -74,7 +98,9 @@ export const updateTeamMember = async (
       throw new ApiError('Team member not found', 404)
     }
 
-    res.status(200).json({ success: true, data: member })
+    const data = member.toObject ? member.toObject() : member
+    if (data.photo) data.photo = fixPhotoUrl(data.photo)
+    res.status(200).json({ success: true, data })
   } catch (error) {
     next(error)
   }

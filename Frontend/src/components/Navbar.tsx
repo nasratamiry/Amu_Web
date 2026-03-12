@@ -163,20 +163,6 @@ export function Navbar() {
                     {t.nav[link.labelKey]}
                   </NavLink>
                 ))}
-                <div className="px-4 py-3 flex items-center gap-2 border-t border-slate-100">
-                  <span className="text-slate-500 text-sm">زبان / Language:</span>
-                  <div className="flex gap-2">
-                    {locales.map((l) => (
-                      <button
-                        key={l.code}
-                        onClick={() => { setLocale(l.code); setLangOpen(false) }}
-                        className={`px-3 py-1 rounded text-sm font-fa ${locale === l.code ? 'bg-brand-soft text-brand font-medium' : 'text-brand hover:text-brand-dark'}`}
-                      >
-                        {l.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </div>
             </motion.div>
           )}

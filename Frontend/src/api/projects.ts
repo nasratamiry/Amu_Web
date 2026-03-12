@@ -1,4 +1,5 @@
 import { api } from './client'
+import { apiCache } from './cache'
 import type { ApiResponse } from './client'
 import type { ProjectEntity } from './types'
 import { toProject } from './types'
@@ -25,15 +26,22 @@ export async function fetchProjects(params?: ProjectsListParams): Promise<{
     Object.keys(query).length ? query : undefined
   )
 
-  if (!res.success || !res.data) {
-    return { projects: [], error: res.message }
+  if (res.success && res.data && Array.isArray(res.data)) {
+    const projects = res.data.map(toProject)
+    const cachePayload = { projects, pagination: res.pagination }
+    apiCache.set(apiCache.keys.projects(params), cachePayload)
+    return { projects, pagination: res.pagination }
   }
 
-  const projects = Array.isArray(res.data) ? res.data.map(toProject) : []
-  return {
-    projects,
-    pagination: res.pagination,
+  const cached = apiCache.get<{
+    projects: Project[]
+    pagination?: ApiResponse<ProjectEntity[]>['pagination']
+  }>(apiCache.keys.projects(params))
+  if (cached && Array.isArray(cached.projects)) {
+    return { projects: cached.projects, pagination: cached.pagination }
   }
+
+  return { projects: [], error: res.message }
 }
 
 export async function fetchProjectById(id: string): Promise<{

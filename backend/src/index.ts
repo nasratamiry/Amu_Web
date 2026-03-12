@@ -3,6 +3,7 @@ import cors from 'cors'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import path from 'path'
+import fs from 'fs'
 import dotenv from 'dotenv'
 import rateLimit from 'express-rate-limit'
 import routes from './routes'
@@ -14,9 +15,13 @@ const app = express()
 const PORT = process.env.PORT || 5000
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/amu_web'
 
+// Trust proxy (required when behind reverse proxy like Spaceship)
+app.set('trust proxy', 1)
+
 // CORS
 const corsOrigins = process.env.CORS_ORIGINS?.split(',').map((o) => o.trim()) || [
   'http://localhost:5173',
+  'http://localhost:5174',
   'https://euphonious-kheer-5db008.netlify.app',
 ]
 
@@ -45,10 +50,26 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')))
 // API routes
 app.use('/api', routes)
 
-// 404 handler
-app.use((_req, res) => {
-  res.status(404).json({ success: false, message: 'Not found' })
+// Root route - friendly response instead of 404
+app.get('/', (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Etihad Amu API',
+    api: '/api',
+    health: '/api/health',
+  })
 })
+
+// Serve frontend static files (when deployed on same domain)
+const clientDir = path.join(process.cwd(), 'client')
+if (fs.existsSync(clientDir)) {
+  app.use(express.static(clientDir))
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(clientDir, 'index.html'))
+  })
+} else {
+  app.use((_req, res) => res.status(404).json({ success: false, message: 'Not found' }))
+}
 
 // Error handler
 app.use(errorHandler)

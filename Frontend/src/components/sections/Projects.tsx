@@ -5,25 +5,34 @@ import { fetchProjects } from '@/api'
 import { projects as fallbackProjects } from '@/data/projects'
 import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
-import type { Project } from '@/api/types'
+import { getLocalized, type Project } from '@/api/types'
 
 export function Projects() {
-  const { t, path } = useI18n()
+  const { t, path, locale } = useI18n()
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const loadProjects = () => {
+    fetchProjects({ limit: 12 }).then(({ projects: data, error: err }) => {
+      if (err) {
+        setError(err)
+        setProjects(fallbackProjects as Project[])
+      } else {
+        setError(null)
+        setProjects(data)
+      }
+    }).finally(() => setLoading(false))
+  }
+
   useEffect(() => {
-    fetchProjects({ limit: 12 })
-      .then(({ projects: data, error: err }) => {
-        if (err) {
-          setError(err)
-          setProjects(fallbackProjects as Project[])
-        } else {
-          setProjects(data)
-        }
-      })
-      .finally(() => setLoading(false))
+    loadProjects()
+  }, [])
+
+  useEffect(() => {
+    const onVisible = () => loadProjects()
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
   }, [])
 
   return (
@@ -93,16 +102,16 @@ export function Projects() {
                       )}
                     </div>
                     <div className="p-6 flex flex-col flex-1">
-                      {project.category && (
+                      {(project.category || getLocalized(project, 'category', locale)) && (
                         <span className="text-brand text-sm font-medium">
-                          {project.category}
+                          {getLocalized(project, 'category', locale) || project.category}
                         </span>
                       )}
                       <h3 className="mt-2 text-xl font-bold text-slate-900 group-hover:text-brand transition-colors">
-                        {project.title}
+                        {getLocalized(project, 'title', locale) || project.title}
                       </h3>
                       <p className="mt-3 text-slate-600 text-sm leading-relaxed line-clamp-2">
-                        {project.description}
+                        {getLocalized(project, 'description', locale) || project.description}
                       </p>
                       <div className="mt-4 flex flex-wrap gap-2">
                         {(project.technologies ?? []).slice(0, 4).map((tech) => (
@@ -116,28 +125,61 @@ export function Projects() {
                       </div>
                     </div>
                   </Link>
-                  <div className="px-6 pb-6 pt-0 flex gap-3">
+                  <div className="px-6 pb-6 pt-0 flex flex-col gap-3">
                     <Link
                       to={path(`/projects/${project.id}`)}
-                      className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand text-white font-semibold text-sm hover:bg-brand-dark transition-colors"
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-brand text-white font-semibold text-sm hover:bg-brand-dark transition-colors"
                     >
                       {t.projects.viewProject}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
                     </Link>
-                    {project.link && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-gray-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 hover:border-brand/30 transition-colors"
-                      >
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        GitHub
-                      </a>
+                    {(project.link || project.playStoreUrl || project.appStoreUrl) && (
+                      <div className="flex flex-wrap gap-2">
+                        {project.link && (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 min-w-[90px] flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg border border-gray-200 text-slate-700 font-medium text-xs hover:bg-slate-50 hover:border-brand/30 transition-colors"
+                          >
+                            <svg className="w-4 h-4 shrink-0 text-emerald-500" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
+                            <span className="truncate">{t.projects.website}</span>
+                          </a>
+                        )}
+                        {project.playStoreUrl && (
+                          <a
+                            href={project.playStoreUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 min-w-[90px] flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg border border-gray-200 text-slate-700 font-medium text-xs hover:bg-slate-50 hover:border-brand/30 transition-colors"
+                          >
+                            <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                              <path fill="#4285F4" d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92z" />
+                              <path fill="#34A853" d="M16.955 12l3.612-3.612-9.062-9.062L6.544 10.5l10.411 1.5z" />
+                              <path fill="#FBBC05" d="M16.955 12l-10.411 1.5 3.661 9.75 5.751-5.25L20.567 15.5z" />
+                              <path fill="#EA4335" d="M13.792 12l-7.248-1.5-3.661 9.75 5.751 5.25 5.158-13.5z" />
+                            </svg>
+                            <span className="truncate">{t.projects.playStore}</span>
+                          </a>
+                        )}
+                        {project.appStoreUrl && (
+                          <a
+                            href={project.appStoreUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 min-w-[90px] flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-lg border border-gray-200 text-slate-700 font-medium text-xs hover:bg-slate-50 hover:border-brand/30 transition-colors"
+                          >
+                            <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                              <path fill="#007AFF" d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                            </svg>
+                            <span className="truncate">{t.projects.appStore}</span>
+                          </a>
+                        )}
+                      </div>
                     )}
                   </div>
                 </motion.div>
@@ -155,7 +197,7 @@ export function Projects() {
                 className="inline-flex items-center gap-2 text-brand hover:text-brand-dark font-medium transition-colors"
               >
                 {t.projects.viewAll}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>

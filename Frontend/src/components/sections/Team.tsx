@@ -4,9 +4,16 @@ import { fetchTeamMembers } from '@/api'
 import { teamMembers as fallbackMembers } from '@/data/team'
 import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
-import type { TeamMember } from '@/api/types'
+import { getLocalized, type TeamMember } from '@/api/types'
 
 const ROLE_ORDER = ['CEO', 'CTO', 'CFO', 'CMO', 'CPO'] as const
+
+function nameToSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+}
 
 function sortByRole(members: TeamMember[]): TeamMember[] {
   return [...members].sort((a, b) => {
@@ -17,33 +24,42 @@ function sortByRole(members: TeamMember[]): TeamMember[] {
 }
 
 export function Team() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const [members, setMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetchTeamMembers()
-      .then(({ members: data, error: err }) => {
-        if (err) {
-          setError(err)
-          setMembers(
-            sortByRole(
-              fallbackMembers.map((m) => ({
-                id: m.id,
-                name: m.name,
-                role: m.role,
-                image: m.image,
-                bio: m.bio,
-                social: m.social,
-              }))
-            )
+  const loadMembers = () => {
+    fetchTeamMembers().then(({ members: data, error: err }) => {
+      if (err) {
+        setError(err)
+        setMembers(
+          sortByRole(
+            fallbackMembers.map((m) => ({
+              id: m.id,
+              name: m.name,
+              role: m.role,
+              image: m.image,
+              bio: m.bio,
+              social: m.social,
+            }))
           )
-        } else {
-          setMembers(sortByRole(data))
-        }
-      })
-      .finally(() => setLoading(false))
+        )
+      } else {
+        setError(null)
+        setMembers(sortByRole(data))
+      }
+    }).finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    loadMembers()
+  }, [])
+
+  useEffect(() => {
+    const onVisible = () => loadMembers()
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
   }, [])
 
   return (
@@ -118,19 +134,6 @@ export function Team() {
                           </svg>
                         </a>
                       )}
-                      {member.social.twitter && (
-                        <a
-                          href={member.social.twitter}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-2 rounded-lg bg-white border border-slate-200 text-brand hover:text-brand-dark hover:border-brand/40 shadow-md transition-colors"
-                          aria-label="Twitter"
-                        >
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231z" />
-                          </svg>
-                        </a>
-                      )}
                       {member.social.email && (
                         <a
                           href={`mailto:${member.social.email}`}
@@ -145,8 +148,20 @@ export function Team() {
                     </div>
                   </div>
                   <h3 className="mt-8 text-lg font-semibold text-slate-900">{member.name}</h3>
-                  <p className="mt-1 text-brand text-sm font-medium">{member.role}</p>
-                  <p className="mt-2 text-slate-600 text-sm max-w-xs mx-auto">{member.bio}</p>
+                  <p className="mt-1 text-brand text-sm font-medium">
+                    {locale === 'en'
+                      ? member.role
+                      : ((member.roleFa || member.rolePs)
+                          ? getLocalized(member, 'role', locale)
+                          : (t.team.roles?.[member.role as keyof typeof t.team.roles] || member.role))}
+                  </p>
+                  <p className="mt-2 text-slate-600 text-sm max-w-xs mx-auto">
+                    {locale === 'en'
+                      ? (member.bio || '')
+                      : ((member.bioFa || member.bioPs)
+                          ? getLocalized(member, 'bio', locale)
+                          : (t.team.members?.[nameToSlug(member.name) as keyof typeof t.team.members]?.bio || member.bio || ''))}
+                  </p>
                 </motion.div>
               ))}
             </div>

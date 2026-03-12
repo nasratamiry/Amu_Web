@@ -2,10 +2,18 @@ import { z } from 'zod'
 
 export const projectSchema = z.object({
   title: z.string().min(1, 'Title is required'),
+  titleFa: z.string().optional(),
+  titlePs: z.string().optional(),
   description: z.string().min(1, 'Description is required'),
+  descriptionFa: z.string().optional(),
+  descriptionPs: z.string().optional(),
   category: z.string().optional(),
+  categoryFa: z.string().optional(),
+  categoryPs: z.string().optional(),
   image: z.string().min(1, 'Image URL is required'),
   link: z.string().url().optional().or(z.literal('')),
+  playStoreUrl: z.string().url().optional().or(z.literal('')),
+  appStoreUrl: z.string().url().optional().or(z.literal('')),
   technologies: z.array(z.string()).optional(),
   year: z.string().optional(),
 })
@@ -13,27 +21,38 @@ export const projectSchema = z.object({
 export const teamMemberSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   role: z.string().min(1, 'Role is required'),
+  roleFa: z.string().optional(),
+  rolePs: z.string().optional(),
   photo: z.string().min(1, 'Photo URL is required'),
   bio: z.string().optional(),
+  bioFa: z.string().optional(),
+  bioPs: z.string().optional(),
   socialLinks: z
     .object({
       linkedin: z.string().url().optional().or(z.literal('')),
-      twitter: z.string().url().optional().or(z.literal('')),
-      github: z.string().url().optional().or(z.literal('')),
+      email: z.string().email().optional().or(z.literal('')),
     })
     .optional(),
 })
 
 export const blogPostSchema = z.object({
   title: z.string().min(1, 'Title is required'),
+  titleFa: z.string().optional(),
+  titlePs: z.string().optional(),
   slug: z.string().min(1, 'Slug is required'),
   content: z.string().min(1, 'Content is required'),
+  contentFa: z.string().optional(),
+  contentPs: z.string().optional(),
   excerpt: z.string().optional(),
+  excerptFa: z.string().optional(),
+  excerptPs: z.string().optional(),
   image: z.string().min(1, 'Image URL is required'),
   author: z.string().optional(),
   date: z.coerce.date().optional(),
   readTime: z.string().optional(),
   category: z.string().optional(),
+  categoryFa: z.string().optional(),
+  categoryPs: z.string().optional(),
 })
 
 export const adminLoginSchema = z.object({

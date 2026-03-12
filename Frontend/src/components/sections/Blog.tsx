@@ -5,38 +5,47 @@ import { fetchBlogPosts } from '@/api'
 import { blogPosts as fallbackPosts } from '@/data/blog'
 import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
-import type { BlogPost } from '@/api/types'
+import { getLocalized, type BlogPost } from '@/api/types'
 
 export function Blog() {
-  const { t, path } = useI18n()
+  const { t, path, locale } = useI18n()
   const [posts, setPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  const loadPosts = () => {
+    fetchBlogPosts({ limit: 9 }).then(({ posts: data, error: err }) => {
+      if (err) {
+        setError(err)
+        setPosts(
+          fallbackPosts.map((p) => ({
+            id: p.id,
+            slug: p.slug,
+            title: p.title,
+            excerpt: p.excerpt,
+            content: p.content,
+            image: p.image,
+            author: p.author,
+            date: p.date,
+            readTime: p.readTime,
+            category: p.category,
+          }))
+        )
+      } else {
+        setError(null)
+        setPosts(data)
+      }
+    }).finally(() => setLoading(false))
+  }
+
   useEffect(() => {
-    fetchBlogPosts({ limit: 9 })
-      .then(({ posts: data, error: err }) => {
-        if (err) {
-          setError(err)
-          setPosts(
-            fallbackPosts.map((p) => ({
-              id: p.id,
-              slug: p.slug,
-              title: p.title,
-              excerpt: p.excerpt,
-              content: p.content,
-              image: p.image,
-              author: p.author,
-              date: p.date,
-              readTime: p.readTime,
-              category: p.category,
-            }))
-          )
-        } else {
-          setPosts(data)
-        }
-      })
-      .finally(() => setLoading(false))
+    loadPosts()
+  }, [])
+
+  useEffect(() => {
+    const onVisible = () => loadPosts()
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
   }, [])
 
   return (
@@ -92,7 +101,7 @@ export function Blog() {
                     <div className="aspect-video rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft group-hover:shadow-xl group-hover:border-brand/30 transition-all duration-300">
                       <LazyImage
                         src={post.image}
-                        alt={post.title}
+                        alt={getLocalized(post, 'title', locale) || post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </div>
@@ -101,12 +110,12 @@ export function Blog() {
                       <span>•</span>
                       <span>{post.readTime || ''}</span>
                       <span>•</span>
-                      <span className="text-brand">{post.category || ''}</span>
+                      <span className="text-brand">{getLocalized(post, 'category', locale) || post.category || ''}</span>
                     </div>
                     <h3 className="mt-2 text-xl font-semibold text-slate-900 group-hover:text-brand transition-colors line-clamp-2">
-                      {post.title}
+                      {getLocalized(post, 'title', locale) || post.title}
                     </h3>
-                    <p className="mt-2 text-slate-600 text-sm line-clamp-2">{post.excerpt}</p>
+                    <p className="mt-2 text-slate-600 text-sm line-clamp-2">{getLocalized(post, 'excerpt', locale) || post.excerpt}</p>
                     <span className="mt-3 inline-flex items-center gap-1 text-brand hover:text-brand-dark text-sm font-medium group-hover:gap-2 transition-all">
                       {t.blog.readMore}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

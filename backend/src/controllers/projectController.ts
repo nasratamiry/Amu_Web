@@ -3,6 +3,21 @@ import { Project } from '../models/Project'
 import { ApiError } from '../middleware/errorHandler'
 import mongoose from 'mongoose'
 
+// Fix localhost/relative image URLs to use production API URL
+const fixImageUrl = (url: string): string => {
+  if (!url) return url
+  const apiBase = process.env.API_BASE_URL
+  if (!apiBase) return url
+  if (url.startsWith('http://localhost:') || url.startsWith('https://localhost:')) {
+    const match = url.match(/\/uploads\/.+$/)
+    return match ? `${apiBase}${match[0]}` : url
+  }
+  if (url.startsWith('/uploads/')) {
+    return `${apiBase}${url}`
+  }
+  return url
+}
+
 export const getAllProjects = async (
   req: Request,
   res: Response,
@@ -22,9 +37,14 @@ export const getAllProjects = async (
       Project.countDocuments(filter),
     ])
 
+    const fixed = (projects as { image?: string }[]).map((p) => ({
+      ...p,
+      image: fixImageUrl(p.image || ''),
+    }))
+
     res.status(200).json({
       success: true,
-      data: projects,
+      data: fixed,
       pagination: {
         page: Number(page),
         limit: Number(limit),
@@ -53,7 +73,9 @@ export const getProjectById = async (
       throw new ApiError('Project not found', 404)
     }
 
-    res.status(200).json({ success: true, data: project })
+    const data = project.toObject ? project.toObject() : project
+    if (data.image) data.image = fixImageUrl(data.image)
+    res.status(200).json({ success: true, data })
   } catch (error) {
     next(error)
   }
@@ -66,7 +88,9 @@ export const createProject = async (
 ) => {
   try {
     const project = await Project.create(req.body)
-    res.status(201).json({ success: true, data: project })
+    const data = project.toObject ? project.toObject() : project
+    if (data.image) data.image = fixImageUrl(data.image)
+    res.status(201).json({ success: true, data })
   } catch (error) {
     next(error)
   }
@@ -91,7 +115,9 @@ export const updateProject = async (
       throw new ApiError('Project not found', 404)
     }
 
-    res.status(200).json({ success: true, data: project })
+    const data = project.toObject ? project.toObject() : project
+    if (data.image) data.image = fixImageUrl(data.image)
+    res.status(200).json({ success: true, data })
   } catch (error) {
     next(error)
   }

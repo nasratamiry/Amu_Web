@@ -6,11 +6,11 @@ import { fetchBlogPostBySlug } from '@/api'
 import { blogPosts as fallbackPosts } from '@/data/blog'
 import { LazyImage } from '@/components/LazyImage'
 import { useI18n } from '@/i18n/I18nContext'
-import type { BlogPost } from '@/api/types'
+import { getLocalized, type BlogPost } from '@/api/types'
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
-  const { t, path } = useI18n()
+  const { t, path, locale } = useI18n()
   const [post, setPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
@@ -77,8 +77,8 @@ export function BlogPostPage() {
   return (
     <>
       <Helmet>
-        <title>{post.title} | Etihad Amu Blog</title>
-        <meta name="description" content={post.excerpt || post.title} />
+        <title>{getLocalized(post, 'title', locale) || post.title} | Etihad Amu Blog</title>
+        <meta name="description" content={getLocalized(post, 'excerpt', locale) || post.excerpt || post.title} />
       </Helmet>
 
       <article className="pt-24 lg:pt-32 pb-20 bg-white min-h-screen">
@@ -101,7 +101,7 @@ export function BlogPostPage() {
             <div className="aspect-video rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 mb-8">
               <LazyImage
                 src={post.image}
-                alt={post.title}
+                alt={getLocalized(post, 'title', locale) || post.title}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -114,10 +114,10 @@ export function BlogPostPage() {
                   <span>{post.readTime}</span>
                 </>
               )}
-              {post.category && (
+              {(getLocalized(post, 'category', locale) || post.category) && (
                 <>
                   <span>•</span>
-                  <span className="text-brand">{post.category}</span>
+                  <span className="text-brand">{getLocalized(post, 'category', locale) || post.category}</span>
                 </>
               )}
               {post.author && (
@@ -131,12 +131,12 @@ export function BlogPostPage() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-6 leading-tight">
-              {post.title}
+              {getLocalized(post, 'title', locale) || post.title}
             </h1>
 
             <div className="prose prose-slate max-w-none">
               <div className="text-slate-600 leading-relaxed space-y-4 whitespace-pre-line">
-                {post.content}
+                {getLocalized(post, 'content', locale) || post.content}
               </div>
             </div>
 

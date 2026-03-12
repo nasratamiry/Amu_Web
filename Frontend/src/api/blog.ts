@@ -1,4 +1,5 @@
 import { api } from './client'
+import { apiCache } from './cache'
 import type { ApiResponse } from './client'
 import type { BlogPostEntity } from './types'
 import { toBlogPost } from './types'
@@ -23,15 +24,21 @@ export async function fetchBlogPosts(params?: BlogListParams): Promise<{
     Object.keys(query).length ? query : undefined
   )
 
-  if (!res.success || !res.data) {
-    return { posts: [], error: res.message }
+  if (res.success && res.data && Array.isArray(res.data)) {
+    const posts = res.data.map(toBlogPost)
+    const cachePayload = { posts, pagination: res.pagination }
+    apiCache.set(apiCache.keys.blog(params), cachePayload)
+    return { posts, pagination: res.pagination }
   }
 
-  const posts = Array.isArray(res.data) ? res.data.map(toBlogPost) : []
-  return {
-    posts,
-    pagination: res.pagination,
+  const cached = apiCache.get<{ posts: BlogPost[]; pagination?: ApiResponse<BlogPostEntity[]>['pagination'] }>(
+    apiCache.keys.blog(params)
+  )
+  if (cached && Array.isArray(cached.posts)) {
+    return { posts: cached.posts, pagination: cached.pagination }
   }
+
+  return { posts: [], error: res.message }
 }
 
 export async function fetchBlogPostBySlug(slug: string): Promise<{

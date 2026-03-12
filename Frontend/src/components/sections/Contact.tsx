@@ -94,7 +94,7 @@ export function Contact() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-slate-900">{t.contact.office}</h3>
-                  <p className="text-slate-600">Kabul, Afghanistan</p>
+                  <p className="text-slate-600">{t.contact.address}</p>
                 </div>
               </div>
             </div>

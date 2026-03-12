@@ -1,14 +1,27 @@
 import { useEffect, useState } from 'react'
 import { adminApi } from '@/api/adminClient'
+import { apiCache } from '@/api/cache'
 import { ImageUploadInput } from '@/components/admin/ImageUploadInput'
+
+type LangTab = 'en' | 'fa' | 'ps'
+
+const LANG_TABS: { id: LangTab; label: string }[] = [
+  { id: 'en', label: 'English' },
+  { id: 'fa', label: 'فارسی' },
+  { id: 'ps', label: 'پښتو' },
+]
 
 interface TeamMember {
   _id: string
   name: string
   role: string
+  roleFa?: string
+  rolePs?: string
   photo: string
   bio?: string
-  socialLinks?: { linkedin?: string; twitter?: string; github?: string }
+  bioFa?: string
+  bioPs?: string
+  socialLinks?: { linkedin?: string; email?: string }
 }
 
 export function TeamPage() {
@@ -16,13 +29,18 @@ export function TeamPage() {
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
   const [editing, setEditing] = useState<TeamMember | null>(null)
+  const [langTab, setLangTab] = useState<LangTab>('en')
   const [form, setForm] = useState({
     name: '',
     role: '',
+    roleFa: '',
+    rolePs: '',
     photo: '',
     bio: '',
+    bioFa: '',
+    bioPs: '',
     linkedin: '',
-    github: '',
+    email: '',
   })
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
@@ -41,19 +59,25 @@ export function TeamPage() {
 
   const openCreate = () => {
     setEditing(null)
-    setForm({ name: '', role: '', photo: '', bio: '', linkedin: '', github: '' })
+    setLangTab('en')
+    setForm({ name: '', role: '', roleFa: '', rolePs: '', photo: '', bio: '', bioFa: '', bioPs: '', linkedin: '', email: '' })
     setModalOpen(true)
   }
 
   const openEdit = (m: TeamMember) => {
     setEditing(m)
+    setLangTab('en')
     setForm({
       name: m.name,
       role: m.role,
+      roleFa: m.roleFa || '',
+      rolePs: m.rolePs || '',
       photo: m.photo,
       bio: m.bio || '',
+      bioFa: m.bioFa || '',
+      bioPs: m.bioPs || '',
       linkedin: m.socialLinks?.linkedin || '',
-      github: m.socialLinks?.github || '',
+      email: m.socialLinks?.email || '',
     })
     setModalOpen(true)
   }
@@ -65,11 +89,15 @@ export function TeamPage() {
     const payload = {
       name: form.name,
       role: form.role,
+      roleFa: form.roleFa || undefined,
+      rolePs: form.rolePs || undefined,
       photo: form.photo,
       bio: form.bio || undefined,
+      bioFa: form.bioFa || undefined,
+      bioPs: form.bioPs || undefined,
       socialLinks: {
         linkedin: form.linkedin || undefined,
-        github: form.github || undefined,
+        email: form.email || undefined,
       },
     }
 
@@ -79,6 +107,7 @@ export function TeamPage() {
 
     if (res.success) {
       setModalOpen(false)
+      apiCache.invalidate('team')
       loadMembers()
     } else {
       setError(res.message || 'Failed to save')
@@ -89,7 +118,10 @@ export function TeamPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this team member?')) return
     const res = await adminApi.delete(`/team/${id}`)
-    if (res.success) loadMembers()
+    if (res.success) {
+      apiCache.invalidate('team')
+      loadMembers()
+    }
   }
 
   return (
@@ -163,16 +195,6 @@ export function TeamPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 text-sm mb-1">Role *</label>
-                  <input
-                    value={form.role}
-                    onChange={(e) => setForm({ ...form, role: e.target.value })}
-                    required
-                    placeholder="CEO, CTO, etc."
-                    className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
-                  />
-                </div>
-                <div>
                   <label className="block text-slate-400 text-sm mb-1">Photo URL *</label>
                   <ImageUploadInput
                     value={form.photo}
@@ -180,12 +202,55 @@ export function TeamPage() {
                     required
                   />
                 </div>
+                <div className="border-b border-slate-700 -mx-6 px-6">
+                  <div className="flex gap-2">
+                    {LANG_TABS.map((tab) => (
+                      <button
+                        key={tab.id}
+                        type="button"
+                        onClick={() => setLangTab(tab.id)}
+                        className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors ${
+                          langTab === tab.id
+                            ? 'bg-slate-800 text-white border-b-2 border-brand'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <div>
-                  <label className="block text-slate-400 text-sm mb-1">Bio</label>
+                  <label className="block text-slate-400 text-sm mb-1">
+                    Role * {langTab !== 'en' && `(${LANG_TABS.find((t) => t.id === langTab)?.label})`}
+                  </label>
+                  <input
+                    value={langTab === 'en' ? form.role : langTab === 'fa' ? form.roleFa : form.rolePs}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        ...(langTab === 'en' ? { role: e.target.value } : langTab === 'fa' ? { roleFa: e.target.value } : { rolePs: e.target.value }),
+                      })
+                    }
+                    required={langTab === 'en'}
+                    placeholder={langTab === 'en' ? 'CEO, CTO, etc.' : 'مثال: مدیر عامل'}
+                    className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-400 text-sm mb-1">
+                    Bio {langTab !== 'en' && `(${LANG_TABS.find((t) => t.id === langTab)?.label})`}
+                  </label>
                   <textarea
-                    value={form.bio}
-                    onChange={(e) => setForm({ ...form, bio: e.target.value })}
+                    value={langTab === 'en' ? form.bio : langTab === 'fa' ? form.bioFa : form.bioPs}
+                    onChange={(e) =>
+                      setForm({
+                        ...form,
+                        ...(langTab === 'en' ? { bio: e.target.value } : langTab === 'fa' ? { bioFa: e.target.value } : { bioPs: e.target.value }),
+                      })
+                    }
                     rows={3}
+                    placeholder={langTab !== 'en' ? 'توضیحات به زبان انتخاب شده' : undefined}
                     className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
                   />
                 </div>
@@ -195,14 +260,17 @@ export function TeamPage() {
                     <input
                       value={form.linkedin}
                       onChange={(e) => setForm({ ...form, linkedin: e.target.value })}
+                      placeholder="https://linkedin.com/in/username"
                       className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-400 text-sm mb-1">GitHub</label>
+                    <label className="block text-slate-400 text-sm mb-1">Email</label>
                     <input
-                      value={form.github}
-                      onChange={(e) => setForm({ ...form, github: e.target.value })}
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      placeholder="email@example.com"
                       className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white"
                     />
                   </div>

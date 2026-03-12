@@ -42,7 +42,7 @@ const teamMembers = [
     bio: 'Leads business strategy, oversees financial planning with the CFO, drives business growth, and represents the startup in all key negotiations.',
     socialLinks: {
       linkedin: 'https://www.linkedin.com/in/m-anosh-sharifi-696819397',
-      github: 'https://github.com/Ansohsharifi',
+      email: 'anoshsharifi8@gmail.com',
     },
   },
   {
@@ -52,7 +52,7 @@ const teamMembers = [
     bio: 'Guides technical strategy, manages product development, ensures quality and security, and oversees the tech team.',
     socialLinks: {
       linkedin: 'https://www.linkedin.com/in/latif-haqjou-695354327',
-      github: 'https://github.com/latifhaqjou',
+      email: 'haqjoul@gmail.com',
     },
   },
   {
@@ -62,7 +62,7 @@ const teamMembers = [
     bio: 'Manages budgeting, financial reporting, fundraising documents, and financial risk control.',
     socialLinks: {
       linkedin: 'https://linkedin.com',
-      github: 'https://github.com/habibshahreshtin98-hash',
+      email: 'habibshahreshtin@gmail.com',
     },
   },
   {
@@ -72,7 +72,7 @@ const teamMembers = [
     bio: 'Leads product roadmap, user experience, feature design, and data-driven prioritization.',
     socialLinks: {
       linkedin: 'https://www.linkedin.com/in/abdulsatar-sharifi-46b7a8365',
-      github: 'https://github.com/Satar-lab',
+      email: 'sharifiabdulsatar89@gmail.com',
     },
   },
   {
@@ -82,7 +82,7 @@ const teamMembers = [
     bio: 'Develops marketing and branding strategies, manages social media, digital campaigns, and ensures message consistency.',
     socialLinks: {
       linkedin: 'https://www.linkedin.com/in/ziauddin-khaliqyar-b88664380',
-      github: 'https://github.com/vipmb002-cod',
+      email: 'ziauddinkhaliqyar517@gmail.com',
     },
   },
 ]
@@ -151,6 +151,7 @@ async function seed() {
   const admins = [
     { email: process.env.ADMIN_EMAIL || 'admin@amu.one', password: process.env.ADMIN_PASSWORD || 'Admin@123' },
     { email: 'nasratamiry93@gmail.com', password: '@Mazar2020' },
+    { email: 'haqjoul@gmail.com', password: '@Mazar2020' },
   ]
   for (const { email, password } of admins) {
     let admin = await Admin.findOne({ email })

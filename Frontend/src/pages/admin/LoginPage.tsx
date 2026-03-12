@@ -65,7 +65,7 @@ export function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
-                placeholder="admin@amu.one"
+                placeholder="your@email.com"
               />
             </div>
 
@@ -93,10 +93,6 @@ export function LoginPage() {
             </button>
           </form>
         </div>
-
-        <p className="text-center text-slate-500 text-sm mt-6">
-          Default: admin@amu.one / Admin@123 (run npm run seed in backend)
-        </p>
       </div>
     </div>
   )
