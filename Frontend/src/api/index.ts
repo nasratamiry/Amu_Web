@@ -1,6 +1,0 @@
-export * from './projects'
-export * from './team'
-export * from './blog'
-export * from './contact'
-export * from './types'
-export { api } from './client'
