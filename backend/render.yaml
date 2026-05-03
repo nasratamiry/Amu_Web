@@ -1,0 +1,19 @@
+# Render Blueprint - Etihad Amu Backend API
+# https://docs.render.com/blueprint-spec
+
+services:
+  - type: web
+    runtime: node
+    name: amu-web-backend
+    region: frankfurt
+
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false

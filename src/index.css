@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-brand: #0f5aa0;
+    --color-brand-dark: #0c4d8a;
+    --surface-milky: #f5f2eb;
+    --border-readable: rgba(15, 23, 42, 0.1);
+    --border-readable-strong: rgba(15, 23, 42, 0.16);
+  }
+
+  .page-enterprise-flow {
+    background-image: linear-gradient(
+      180deg,
+      #042a47,
+      #063d66 5%,
+      #0c4d8a 11%,
+      #0f5aa0 18%,
+      #2e6fa8 26%,
+      #5c93c4 36%,
+      #9dc0e0 48%,
+      #cfe4f4,
+      #e8f1fa 76%,
+      #f4f8fc 88%,
+      #faf8f4 96%,
+      #f5f2eb
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-color: var(--surface-milky);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html[dir='rtl'] {
+    text-align: right;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+  }
+
+  html[dir='rtl'] body {
+    text-align: right;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+  }
+
+  html[dir='ltr'] body {
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply text-slate-900 antialiased;
+    background-color: transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 90, 160, 0.45);
+  @apply rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0f5aa0;
+}
