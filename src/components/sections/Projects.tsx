@@ -74,22 +74,23 @@ export function Projects() {
                   whileHover={{ y: -4 }}
                 >
                   <Link to={path(`/projects/${project.id}`)} className="group block">
-                    <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft group-hover:shadow-xl group-hover:border-brand/30 transition-all duration-300">
+                    <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-soft group-hover:shadow-xl group-hover:border-brand/35 transition-all duration-300">
                       <LazyImage
                         src={project.image}
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-brand/95 via-brand/45 to-transparent" />
+                      <span className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-brand via-secondary to-brand scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500" />
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <span className="text-brand-light text-sm font-medium">
+                        <span className="text-accent text-sm font-medium">
                           {project.category || ''}
                         </span>
                         <h3 className="mt-1 text-xl font-bold text-white drop-shadow-lg">
                           {project.title}
                         </h3>
                       </div>
-                      <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 px-3 py-1.5 rounded-full bg-white/95 text-slate-700 text-xs font-semibold">
+                      <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 px-3 py-1.5 rounded-full bg-white/95 text-brand text-xs font-semibold border border-brand/10">
                         {project.year || ''}
                       </div>
                     </div>

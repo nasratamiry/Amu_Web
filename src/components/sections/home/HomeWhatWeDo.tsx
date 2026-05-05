@@ -32,8 +32,8 @@ export function HomeWhatWeDo() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">{t.home.whatWeDoTitle}</h2>
-          <p className="mt-6 text-lg text-black leading-relaxed">{t.home.whatWeDoSubtitle}</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1A3C2A]">{t.home.whatWeDoTitle}</h2>
+          <p className="mt-6 text-lg text-[#235236] leading-relaxed">{t.home.whatWeDoSubtitle}</p>
         </motion.div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {homeServices.map((s, i) => {
@@ -48,13 +48,15 @@ export function HomeWhatWeDo() {
               >
                 <Link
                   to={path(`/services/${s.id}`)}
-                  className="block p-8 rounded-2xl bg-white/95 backdrop-blur-sm border border-slate-200/90 shadow-soft hover:shadow-xl hover:border-brand/30 hover:-translate-y-1 transition-all duration-300 h-full"
+                  className="group relative block p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-[#1A3C2A] hover:bg-[#1A3C2A] hover:-translate-y-1 transition-all duration-300 h-full overflow-hidden"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand [&_svg]:w-10 [&_svg]:h-10">
-                    <ServiceIcon name={s.icon} />
+                  <span className="absolute inset-0 bg-[#1A3C2A] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <span className="absolute inset-x-0 top-0 h-[3px] bg-[#E8620A] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500" />
+                  <div className="relative w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-[#C95208] group-hover:bg-white/85 group-hover:text-[#C95208] transition-all duration-300 [&_svg]:w-10 [&_svg]:h-10">
+                    <ServiceIcon name={s.icon} className="text-[#C95208] group-hover:text-[#C95208]" />
                   </div>
-                  <h3 className="mt-6 text-lg font-bold text-slate-900">{content.title}</h3>
-                  <p className="mt-3 text-black text-sm leading-relaxed line-clamp-3">{content.desc}</p>
+                  <h3 className="relative mt-6 text-lg font-bold text-slate-900 group-hover:text-white transition-colors duration-300">{content.title}</h3>
+                  <p className="relative mt-3 text-slate-700 text-sm leading-relaxed line-clamp-3 group-hover:text-white/95 transition-colors duration-300">{content.desc}</p>
                 </Link>
               </motion.div>
             )

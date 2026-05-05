@@ -1,63 +1,58 @@
 # AMU - Etihad Amu Web
 
-A modern, fully responsive startup website built with React, TypeScript, and TailwindCSS. Features smooth animations with Framer Motion, admin panel, and full backend API.
+Marketing site built with React, TypeScript, and Tailwind CSS. Dynamic content comes from an external **Django REST Framework** API (see `FRONTEND_API_README.md`). This repository contains **only the frontend** — there is no Node.js API server here.
 
-## Project Structure
+## Project layout
 
 ```
-Amu_Web/
-├── Frontend/     # React + Vite + TypeScript
-└── backend/      # Node.js + Express API
+Amu_Web-main/
+├── src/                     # React + Vite application
+├── public/
+├── FRONTEND_API_README.md   # API contract consumed by this app
+└── package.json
 ```
 
 ## Features
 
-- **Hero Section** - Company slogan and call-to-action
-- **About Section** - Company story and mission
-- **Services Section** - 5 key services with icons
-- **Technologies Section** - Tech stack display
-- **Projects Section** - Project cards with detail pages
-- **Team Section** - Team members with photos and social links
-- **Blog/News Section** - Blog posts with detail pages
-- **Contact Section** - Contact form and company info
-- **Admin Panel** - Dashboard, Blog, Projects, Team, Messages management
-- **Framer Motion** - Smooth animations and transitions
-- **i18n** - Multi-language support (English, Dari)
-- **SEO Optimized** - Meta tags, Open Graph
+- Sections: hero, about, services, tech stack, projects, team, blog, contact  
+- Project and blog detail routes  
+- Framer Motion, i18n, SEO helpers (`react-helmet-async`)
 
-## Tech Stack
+## Stack
 
-**Frontend:** React 18, TypeScript, Vite, TailwindCSS, React Router, Framer Motion
+- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, React Router  
+- **Backend:** **`https://api.etihadamu.com`** (`**/api/**`; **`VITE_DJANGO_ORIGIN`**). **Dev** uses Vite **`/api`** proxy → that host; **prod** calls the API URL directly. **`server.host: true`** on **5174**.
 
-**Backend:** Node.js, Express, MongoDB (Mongoose)
+## Getting started
 
-## Getting Started
+### 1. API & CORS
 
-### Frontend
+Production API host: **`https://api.etihadamu.com`** (see **`VITE_DJANGO_ORIGIN`**). The Django server must allow **`https://etihadamu.com`** and local dev origins (**`http://localhost:5174`**, etc.). Public site domain: **`src/config/site.ts`** / **`VITE_SITE_URL`**.
+
+### 2. API URL
+
+**`npm run dev`:** defaults to **`/api`** on the Vite host (same-origin). Vite proxies to **`VITE_DJANGO_ORIGIN`** (`https://api.etihadamu.com`). This avoids **CORS** errors when the SPA is on **`localhost:5174`**.
+
+**Production build:** calls **`https://api.etihadamu.com/api/...`** unless you set **`VITE_API_BASE_URL`**. **`https://etihadamu.com`** must be allowed in Django **CORS** for the live API.
+
+**Direct API in dev** (no proxy): set **`VITE_API_BASE_URL=https://api.etihadamu.com/api`** — your API must send **`Access-Control-Allow-Origin`** for `http://localhost:5174`.
+
+Helpers: **`src/api/index.ts`**.
+
+All JSON routes use Django-style trailing slashes; the client unwinds `{ success, data, message }`. Mutating calls send **`Authorization: Bearer …`** using the JWT stored after `adminLogin`.
+
+### 3. Frontend dev server
 
 ```bash
-cd Frontend
 npm install
 npm run dev
 ```
 
-### Backend
+Production bundle:
 
 ```bash
-cd backend
-npm install
-# Set up .env (copy from .env.example)
-npm run dev
-```
-
-### Build
-
-```bash
-# Frontend
-cd Frontend && npm run build
-
-# Backend
-cd backend && npm run build
+npm run build
+npm run preview
 ```
 
 ## License

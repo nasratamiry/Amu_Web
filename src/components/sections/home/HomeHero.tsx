@@ -57,7 +57,7 @@ export function HomeHero() {
           </picture>
         ))}
       </div>
-      <div className="absolute inset-0 z-[1] bg-[#0F5AA0]/18" aria-hidden />
+      <div className="absolute inset-0 z-[1] bg-brand/28" aria-hidden />
       <div className="relative z-[2] w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 lg:pt-32 lg:pb-24">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -92,7 +92,7 @@ export function HomeHero() {
           >
             <Link
               to={path('/contact')}
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-brand text-white rounded-2xl font-semibold hover:bg-brand-dark active:bg-brand-dark shadow-brand hover:shadow-brand-lg transition-all duration-300"
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-[#1A3C2A] border-2 border-[#1A3C2A] text-white rounded-2xl font-semibold hover:bg-white hover:text-[#1A3C2A] active:bg-white shadow-brand hover:shadow-brand-lg transition-all duration-300"
             >
               {t.hero.cta1}
               <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform rtl:group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@ export function HomeHero() {
             </Link>
             <Link
               to={path('/projects')}
-              className="inline-flex items-center gap-2 px-8 py-4 border-2 border-brand text-brand rounded-2xl font-semibold bg-white/40 hover:bg-white/60 active:bg-white/60 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-8 py-4 border-2 border-[#C95208] text-black rounded-2xl font-semibold bg-white hover:bg-[#C95208] active:bg-[#C95208] transition-all duration-300"
             >
               {t.hero.cta2}
             </Link>

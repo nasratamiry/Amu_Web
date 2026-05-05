@@ -42,13 +42,13 @@ export function OurExpertise() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-brand/30 hover:-translate-y-1 transition-all duration-300"
+              className="group p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-[#1A3C2A] hover:bg-[#1A3C2A] hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand [&_svg]:w-10 [&_svg]:h-10">
+              <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-[#C95208] group-hover:bg-white/85 group-hover:text-[#C95208] transition-all duration-300 [&_svg]:w-10 [&_svg]:h-10">
                 {icons[i]}
               </div>
-              <h3 className="mt-6 text-xl font-bold text-slate-900">{item.title}</h3>
-              <p className="mt-4 text-black leading-relaxed">{item.desc}</p>
+              <h3 className="mt-6 text-xl font-bold text-slate-900 group-hover:text-white transition-colors duration-300">{item.title}</h3>
+              <p className="mt-4 text-black leading-relaxed group-hover:text-white/95 transition-colors duration-300">{item.desc}</p>
             </motion.div>
           ))}
         </div>

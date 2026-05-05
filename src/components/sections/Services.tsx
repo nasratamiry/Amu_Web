@@ -23,9 +23,9 @@ export function Services() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="text-white font-semibold text-sm uppercase tracking-wider">{t.services.label}</span>
-          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">{t.services.title}</h2>
-          <p className="mt-6 text-black text-lg">{t.services.subtitle}</p>
+          <span className="text-[#1A3C2A] font-semibold text-sm uppercase tracking-wider">{t.services.label}</span>
+          <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1A3C2A]">{t.services.title}</h2>
+          <p className="mt-6 text-[#235236] text-lg">{t.services.subtitle}</p>
         </motion.div>
 
         <motion.div
@@ -44,15 +44,17 @@ export function Services() {
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
                   whileHover={{ y: -4 }}
-                  className="group p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:bg-brand hover:shadow-xl hover:border-brand transition-all duration-300 h-full flex flex-col items-center text-center cursor-pointer"
+                  className="group relative p-8 rounded-2xl bg-white border border-slate-200 shadow-soft hover:shadow-xl hover:border-[#1A3C2A] hover:bg-[#1A3C2A] transition-all duration-300 h-full flex flex-col items-center text-center cursor-pointer overflow-hidden"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-brand group-hover:bg-white/20 group-hover:text-white transition-all duration-300 [&_svg]:w-10 [&_svg]:h-10 [&_svg]:shrink-0">
-                    <ServiceIcon name={service.icon} className="text-brand group-hover:text-white" />
+                  <span className="absolute inset-0 bg-[#1A3C2A] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <span className="absolute inset-x-0 top-0 h-[3px] bg-[#E8620A] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500" />
+                  <div className="relative w-16 h-16 rounded-2xl bg-brand-soft flex items-center justify-center text-[#C95208] group-hover:bg-white/85 group-hover:text-[#C95208] transition-all duration-300 [&_svg]:w-10 [&_svg]:h-10 [&_svg]:shrink-0">
+                    <ServiceIcon name={service.icon} className="text-[#C95208] group-hover:text-[#C95208]" />
                   </div>
-                  <h3 className="mt-6 text-lg font-bold text-slate-900 group-hover:text-white transition-colors duration-300">
+                  <h3 className="relative mt-6 text-lg font-bold text-slate-900 group-hover:text-white transition-colors duration-300">
                     {content.title}
                   </h3>
-                  <p className="mt-3 text-black text-sm leading-relaxed group-hover:text-white/95 transition-colors duration-300 line-clamp-4">
+                  <p className="relative mt-3 text-slate-700 text-sm leading-relaxed transition-colors duration-300 line-clamp-4 group-hover:text-white/90">
                     {content.desc}
                   </p>
                 </motion.div>

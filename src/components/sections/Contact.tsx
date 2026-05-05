@@ -48,38 +48,38 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-white font-semibold text-sm uppercase tracking-wider">
+            <span className="text-[#1A3C2A] font-semibold text-sm uppercase tracking-wider">
               {t.contact.label}
             </span>
-            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">
+            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1A3C2A]">
               {t.contact.title}
             </h2>
-            <p className="mt-6 text-black text-lg leading-relaxed">
+            <p className="mt-6 text-[#235236] text-lg leading-relaxed">
               {t.contact.subtitle}
             </p>
 
-            <div className="mt-10 space-y-6">
+            <div className="mt-10 space-y-5">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-brand-soft border border-brand/20 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-xl bg-brand-soft border border-[#1A3C2A]/20 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#C95208]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900">{t.contact.email}</h3>
+                  <h3 className="font-semibold text-[#1A3C2A]">{t.contact.email}</h3>
                   <a href="mailto:info@etihadamu.com" className="text-brand hover:text-brand-dark transition-colors">
                     info@etihadamu.com
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-brand-soft border border-brand/20 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-xl bg-brand-soft border border-[#1A3C2A]/20 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#C95208]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900">{t.contact.phone}</h3>
+                  <h3 className="font-semibold text-[#1A3C2A]">{t.contact.phone}</h3>
                   <a
                     href="https://wa.me/93786174307"
                     target="_blank"
@@ -93,15 +93,15 @@ export function Contact() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-brand-soft border border-brand/20 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-xl bg-brand-soft border border-[#1A3C2A]/20 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-[#C95208]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-900">{t.contact.office}</h3>
-                  <p className="text-black">{t.footer.address}</p>
+                  <h3 className="font-semibold text-[#1A3C2A]">{t.contact.office}</h3>
+                  <p className="text-[#235236]">{t.footer.address}</p>
                 </div>
               </div>
             </div>
@@ -112,7 +112,7 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6 p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm">
+            <form onSubmit={handleSubmit} className="space-y-6 p-8 rounded-2xl bg-slate-50 border border-[#1A3C2A]/35 shadow-sm transition-colors duration-300">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
                   {t.contact.name}
@@ -181,7 +181,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full py-4 px-6 bg-brand text-white rounded-2xl font-semibold hover:bg-brand-dark active:bg-brand-dark shadow-brand hover:shadow-brand-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                className="w-full py-4 px-6 bg-[#1A3C2A] text-white rounded-2xl font-semibold hover:bg-[#122a1d] active:bg-[#122a1d] shadow-brand hover:shadow-brand-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
                 {status === 'submitting' ? t.contact.sending : t.contact.send}
               </button>

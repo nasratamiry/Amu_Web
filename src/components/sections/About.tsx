@@ -14,10 +14,10 @@ export function About() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-white font-semibold text-sm uppercase tracking-wider">{t.about.label}</span>
-            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900">{t.about.title}</h2>
-            <p className="mt-6 text-black text-lg leading-relaxed">{t.about.para1}</p>
-            <p className="mt-4 text-black text-lg leading-relaxed">{t.about.para2}</p>
+            <span className="text-[#1A3C2A] font-semibold text-sm uppercase tracking-wider">{t.about.label}</span>
+            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1A3C2A]">{t.about.title}</h2>
+            <p className="mt-6 text-[#235236] text-lg leading-relaxed">{t.about.para1}</p>
+            <p className="mt-4 text-[#235236] text-lg leading-relaxed">{t.about.para2}</p>
 
             <div className="mt-10 grid sm:grid-cols-2 gap-6">
               <motion.div
@@ -26,8 +26,9 @@ export function About() {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="p-5 rounded-xl bg-brand-soft/50 border border-brand/20 shadow-sm hover:shadow-md transition-shadow"
+                className="group relative p-5 rounded-xl bg-brand-soft/50 border border-brand/20 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
               >
+                <span className="absolute inset-x-0 top-0 h-[3px] bg-[#1A3C2A] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300" />
                 <h3 className="text-lg font-bold text-slate-900 mb-2">{t.about.vision}</h3>
                 <p className="text-black text-sm leading-relaxed">{t.about.visionText}</p>
               </motion.div>
@@ -37,8 +38,9 @@ export function About() {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="p-5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+                className="group relative p-5 rounded-xl bg-slate-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
               >
+                <span className="absolute inset-x-0 top-0 h-[3px] bg-[#1A3C2A] scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300" />
                 <h3 className="text-lg font-bold text-slate-900 mb-2">{t.about.mission}</h3>
                 <p className="text-black text-sm leading-relaxed">{t.about.missionText}</p>
               </motion.div>

@@ -4,7 +4,12 @@ import type { ContactMessageInput } from './types'
 export async function submitContactMessage(
   data: ContactMessageInput
 ): Promise<{ success: boolean; message?: string }> {
-  const res = await api.post<{ id: string }>('/contact', data)
+  const res = await api.post<{ id: string }>('/contact', {
+    name: data.name,
+    email: data.email,
+    subject: data.subject ?? '',
+    message: data.message,
+  })
 
   if (!res.success) {
     return { success: false, message: res.message }

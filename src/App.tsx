@@ -5,6 +5,7 @@ import { AboutPage } from './pages/AboutPage'
 import { ServicesPage } from './pages/ServicesPage'
 import { ServiceDetailPage } from './pages/ServiceDetailPage'
 import { TechnologiesPage } from './pages/TechnologiesPage'
+import { TechnologyDetailPage } from './pages/TechnologyDetailPage'
 import { ProjectsPage } from './pages/ProjectsPage'
 import { ProjectDetailPage } from './pages/ProjectDetailPage'
 import { TeamPage } from './pages/TeamPage'
@@ -24,6 +25,7 @@ function App() {
         <Route path="services/:id" element={<ServiceDetailPage />} />
         <Route path="services" element={<ServicesPage />} />
         <Route path="technologies" element={<TechnologiesPage />} />
+        <Route path="technologies/:slug" element={<TechnologyDetailPage />} />
         <Route path="projects" element={<ProjectsPage />} />
         <Route path="projects/:id" element={<ProjectDetailPage />} />
         <Route path="team" element={<TeamPage />} />

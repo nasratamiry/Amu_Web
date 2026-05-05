@@ -71,11 +71,11 @@ export function Navbar() {
     `relative group whitespace-nowrap text-[13px] font-medium transition-colors ${
       solidBar
         ? isActive
-          ? 'text-brand active'
-          : 'text-slate-900 hover:text-brand'
+          ? 'text-[#E8620A] active'
+          : 'text-slate-900 hover:text-[#E8620A]'
         : isActive
-          ? 'text-brand active'
-          : 'text-white/95 hover:text-white drop-shadow-sm'
+          ? 'text-[#E8620A] active'
+          : 'text-white/95 hover:text-[#E8620A] drop-shadow-sm'
     }`
 
   return (
@@ -101,7 +101,7 @@ export function Navbar() {
             {navLinks.map((link) => (
               <NavLink key={link.path} to={path(link.path)} end={link.path === '/'} className={linkTone}>
                 {t.nav[link.labelKey]}
-                <span className="absolute -bottom-1 left-0 rtl:right-0 rtl:left-auto w-0 h-0.5 bg-brand group-hover:w-full group-[.active]:w-full transition-all duration-300" />
+                <span className="absolute -bottom-1 left-0 rtl:right-0 rtl:left-auto w-0 h-0.5 bg-[#E8620A] group-hover:w-full group-[.active]:w-full transition-all duration-300" />
               </NavLink>
             ))}
           </div>
